@@ -1,0 +1,103 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    private String name;
+    private int rollNo;
+
+    public Student(String name, int rollNo) {
+        this.name = name;
+        this.rollNo = rollNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    @Override
+    public String toString() {
+        return "Roll No: " + rollNo + ", Name: " + name;
+    }
+}
+
+public class StudentManagementSystem {
+    private static ArrayList<Student> students = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\nStudent Management System");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Delete Student");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    viewStudents();
+                    break;
+                case 3:
+                    deleteStudent();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void addStudent() {
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter roll number: ");
+        int rollNo = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        Student student = new Student(name, rollNo);
+        students.add(student);
+        System.out.println("Student added successfully.");
+    }
+
+    private static void viewStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students to display.");
+        } else {
+            for (Student student : students) {
+                System.out.println(student);
+            }
+        }
+    }
+
+    private static void deleteStudent() {
+        System.out.print("Enter roll number of student to delete: ");
+        int rollNo = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        boolean found = false;
+        for (Student student : students) {
+            if (student.getRollNo() == rollNo) {
+                students.remove(student);
+                System.out.println("Student deleted successfully.");
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Student with roll number " + rollNo + " not found.");
+        }
+    }
+}
